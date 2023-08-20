@@ -1,10 +1,11 @@
 // app.js
 
+require('dotenv').config();
 const express = require('express');
 const app = express();
 
-const mongoose = require('./config/db.js'); 
-const logger = require('./config/logger.js');
+const mongoose = require('./config/db'); 
+const logger = require('./config/logger');
 
 
 
