@@ -1,5 +1,6 @@
 const logger = require('../../config/logger');
 const bookService = require('../services/bookService');
+const { validationResult } = require('express-validator');
 
 exports.getBooks = async (req, res) => {
     try {
@@ -41,4 +42,21 @@ exports.getBooks = async (req, res) => {
         logger.error(`Internal server error while get books: ${error}`);
         res.status(500).json({ error: 'Internal server error' });
       }
+};
+
+exports.createBook = async (req, res, next) => {
+  try {
+    // Check for validation errors
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      // Return a 400 Bad Request response with validation errors
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const bookData = req.body;
+    const createdBook = await bookService.createBook(bookData);
+    res.status(201).json(createdBook);
+  } catch (error) {
+    logger.error(`Internal server error while creating a book: ${error}`);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };

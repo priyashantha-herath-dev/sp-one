@@ -12,3 +12,18 @@ exports.getBooks = async (page, limit) => {
 exports.getBookCount = async () => {
     return await Book.countDocuments();
 }
+
+exports.createBook = async (bookData) => {
+    try {
+      const newBook = new Book(bookData);
+  
+      const validationError = newBook.validateSync();
+      if (validationError) {
+        throw validationError;
+      }
+  
+      return await newBook.save();
+    } catch (error) {
+      throw error;
+    }
+  };
