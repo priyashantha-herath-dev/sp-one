@@ -14,3 +14,12 @@ exports.createAuthor = async (authorData) => {
     throw error; 
   }
 };
+
+exports.getAllAuthors = async () => {
+  try {
+    const authors = await Author.find();
+    return authors;
+  } catch (error) {
+    throw error;
+  }
+};

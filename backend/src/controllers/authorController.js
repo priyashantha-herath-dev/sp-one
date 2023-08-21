@@ -19,3 +19,12 @@ exports.createAuthor = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+exports.getAuthors = async (req, res, next) => {
+  try {
+    const authors = await authorService.getAllAuthors();
+    res.status(200).json(authors);
+  } catch (error) {
+    next(error);
+  }
+};
