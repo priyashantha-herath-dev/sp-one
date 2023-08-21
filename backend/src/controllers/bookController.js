@@ -60,3 +60,19 @@ exports.createBook = async (req, res, next) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+
+exports.getBookById = async (req, res) => {
+  try {
+    const bookId = req.params.id;
+    const book = await bookService.getBookById(bookId);
+    res.status(200).json(book);
+  } catch (error) {
+    logger.error(`Error while getting book by ID: ${error}`);
+    if (error.message === 'Book not found') {
+      res.status(404).json({ error: 'Book not found' });
+    } else {
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+};

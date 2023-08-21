@@ -26,4 +26,17 @@ exports.createBook = async (bookData) => {
     } catch (error) {
       throw error;
     }
-  };
+};
+
+// Function to get a book by ID, including author details
+exports.getBookById = async (bookId) => {
+  try {
+    const book = await Book.findById(bookId).populate('author');
+    if (!book) {
+      throw new Error('Book not found');
+    }
+    return book;
+  } catch (error) {
+    throw error;
+  }
+};
