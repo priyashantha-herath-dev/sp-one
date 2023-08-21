@@ -23,3 +23,15 @@ exports.getAllAuthors = async () => {
     throw error;
   }
 };
+
+exports.getAuthorById = async (authorId) => {
+  try {
+    const author = await Author.findById(authorId);
+    if (!author) {
+      throw new Error('Author not found');
+    }
+    return author;
+  } catch (error) {
+    throw error;
+  }
+};

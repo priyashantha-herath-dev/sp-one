@@ -28,3 +28,18 @@ exports.getAuthors = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.getAuthorById = async (req, res) => {
+  try {
+    const authorId = req.params.id;
+    const author = await authorService.getAuthorById(authorId);
+    res.status(200).json(author);
+  } catch (error) {
+    logger.error(`Error while getting author by ID: ${error}`);
+    if (error.message === 'Author not found') {
+      res.status(404).json({ error: 'Author not found' });
+    } else {
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+};
